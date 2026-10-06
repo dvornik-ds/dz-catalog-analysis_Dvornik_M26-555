@@ -58,25 +58,47 @@ def decade_label(year):
             text_year = "старые"
     return text_year
 
-for movie in movies:
-    if "comedy" in movie["genres"]:
-        continue
-    print(movie["title"])
+def print_non_comedy_titles(movies):
+    for movie in movies:
+        if "comedy" in movie["genres"]:
+            continue
+        print(movie["title"])
 
+def find_first_masterpiece(movies):    
+    i = 0
+    while i < len(movies):
+        if movies[i]["rating"] >= 9.0:
+            return movies[i]["title"]
+            break
+        i += 1
+    else:
+        return "Шедевров не найдено"
 
-i = 0
-while i < len(movies):
-    if movies[i]["rating"] >= 9.0:
-        print(movies[i]["title"])
-        break
-    i += 1
-else:
-    print("Шедевров не найдено")
-        
 def count_long_movies(movies, threshold=120):
     i = 0
     for movie in movies:
         if movie["duration_min"] > threshold:
             i += 1
     return i
+
+def normalize_title(title):
+    words_list = title.split()
+    new_words_list = []
+    for word in words_list:
+        new_word = word[:1].upper() + word[1:]
+        new_words_list.append(new_word)
+    return " ".join(new_words_list)
+
+def make_slug(title):
+    words_list = title.split()
+    new_words_list = []
+    for word in words_list:
+        new_word = word.lower()
+        new_words_list.append(new_word)
+    return "-".join(new_words_list)
+
+def format_report_line(movie):
+    film_string = f'"{movie["title"]}" ({movie["year"]}) - {movie["rating"]}/10, {duration_in_hours(movie["duration_min"])}, жанры: {", ".join(list(movie["genres"]))}'
+    return film_string
+
 
