@@ -139,3 +139,18 @@ def get_high_rated_movies(movies):
         if movie["rating"] > average
     }
     return high_rated
+
+def all_genres(movies):
+    all_genres = set()
+    for movie in movies:
+        all_genres = all_genres | movie["genres"]
+    return all_genres
+
+def common_actors(movie1, movie2):
+    actors = set(movie1["actors"]) & set(movie2["actors"])
+    return actors
+
+def genres_only_in_one(movies_a, movies_b):
+    genres_a = {genre for movie in movies_a for genre in movie["genres"]}
+    genres_b = {genre for movie in movies_b for genre in movie["genres"]}
+    return genres_a - genres_b
